@@ -1,121 +1,115 @@
-# 🎬 MovieRec Pro - AI-Powered Movie Recommendation System
+# 🎬 MovieRec Pro - AI-Powered Movie Recommendation Backend
 
-A full-stack web application that helps users discover movies and TV shows through intelligent filtering, personalized recommendations, and a smart AI wizard.
+A robust backend system for managing users, movie/TV collections, and AI-powered recommendations. Built for scalability, performance, and secure RESTful APIs.
 
-![MovieRec Pro](https://img.shields.io/badge/Django-5.0-green) ![React](https://img.shields.io/badge/React-18-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue) ![Redis](https://img.shields.io/badge/Redis-3.4-red)
-
----
-
-## 📋 Table of Contents
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Database Schema](#database-schema)
-- [API Documentation](#api-documentation)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [Demo](#demo)
-- [Project Structure](#project-structure)
-- [Best Practices](#best-practices)
 
 ---
 
-## ✨ Features
-
-### 🔥 Discovery System
-- **Trending Movies/TV Shows**: Browse weekly trending content
-- **Advanced Filtering**: Filter by genre, media type, release date, rating
-- **Smart Search**: Find any movie or TV show instantly
-- **Multiple Sort Options**: Sort by popularity, rating, release date, title
-
-### 🎯 AI-Powered Wizard
-6-step intelligent recommendation system:
-1. **Media Type**: Movies or TV Shows
-2. **Mood**: Dramatic, Intense, Gentle, Curious, Otherworldly, Realistic
-3. **Time Period**: Fresh (2023+), Recent, Modern, Golden Era, Throwback, Retro
-4. **Quality**: Masterpieces (8.0+), Highly Rated (7.0+), Average
-5. **Runtime**: Quick (<90min), Standard (90-150min), Epic (150min+)
-6. **Popularity**: Famous (50k+ votes), Well-Known (10k+), Hidden Gems
-
-### 👤 User Collections
-- **Favorites**: Save movies you love
-- **Watchlist**: Movies to watch later  
-- **Watched**: Track viewing history
-- **Ratings**: Rate movies 1-10
-
-### ⚡ Performance Features
-- **Redis Caching**: 1-hour cache for trending content and genres
-- **JWT Authentication**: Secure, stateless user sessions
-- **Database Optimization**: Indexed queries, normalized schema
-- **Real-time Updates**: Live data from TMDb API
+## 📋 Contents
+  •	Features￼
+	•	Backend Requirements￼
+	•	Database Schema￼
+	•	API Documentation￼
+	•	Installation￼
+	•	Environment Variables￼
+	•	Usage￼
+	•	Project Structure￼
+	•	Best Practices￼
+	•	Author￼
+	•	License￼
+	•	Acknowledgments￼
+	•	Contact￼
 
 ---
+✨ Features
 
-## 🛠 Tech Stack
+🔹 User Management
+	•	Register and authenticate users with JWT tokens
+	•	Retrieve and update user profiles
+	•	Secure, stateless sessions
 
-### Backend
-- **Framework**: Django 5.0
-- **API**: Django REST Framework 3.14
-- **Database**: PostgreSQL 16
-- **Caching**: Redis 3.4
-- **Authentication**: JWT (djangorestframework-simplejwt)
-- **Documentation**: Swagger/OpenAPI (drf-yasg)
-- **External API**: TMDb API v3
+🔹 Movie/TV Collections
+	•	Favorites: Save movies/TV shows users love
+	•	Watchlist: Track movies to watch later
+	•	Watched: Maintain viewing history
+	•	Ratings: Rate movies or TV shows (1–10)
 
-### Frontend
-- **Framework**: React 18 (Vite)
-- **Styling**: Tailwind CSS 3
-- **HTTP Client**: Axios
-- **Routing**: React Router v6
-- **Icons**: Lucide React
+🔹 AI-Powered Recommendation Wizard
+	•	6-step intelligent recommendation engine
+	•	Filters include media type, mood, era, quality, runtime, popularity
+	•	Personalized recommendations based on user selections
 
----
+🔹 Performance & Optimization
+	•	Redis caching for trending movies/genres (1-hour TTL)
+	•	Indexed queries and normalized database schema
+	•	Real-time integration with TMDb API
 
-## 🗄 Database Schema
+⸻
 
-### Models
+🛠 Backend Requirements
 
-#### **User** (Django Built-in)
-- `id` (PK)
-- `username`
-- `email`
-- `password`
+System
+	•	Python 3.10+
+	•	PostgreSQL 16
+	•	Redis 3.4+
+	•	TMDb API key
 
-#### **Favorite**
-- `id` (PK)
-- `user_id` (FK → User) - **One-to-Many**
-- `media_id` (TMDb ID)
-- `media_type` ('movie' | 'tv')
-- `created_at`
+Python Dependencies
+	•	Django 5.0
+	•	Django REST Framework 3.14
+	•	djangorestframework-simplejwt
+	•	drf-yasg (Swagger/OpenAPI)
+	•	psycopg2-binary (PostgreSQL connector)
+	•	redis (Python client)
 
-#### **Watchlist**
-- `id` (PK)
-- `user_id` (FK → User) - **One-to-Many**
-- `media_id` (TMDb ID)
-- `media_type` ('movie' | 'tv')
-- `created_at`
+All dependencies are listed in requirements.txt.
 
-#### **Watched**
-- `id` (PK)
-- `user_id` (FK → User) - **One-to-Many**
-- `media_id` (TMDb ID)
-- `media_type` ('movie' | 'tv')
-- `watched_at`
+⸻
 
-#### **Rating**
-- `id` (PK)
-- `user_id` (FK → User) - **One-to-Many**
-- `media_id` (TMDb ID)
-- `media_type` ('movie' | 'tv')
-- `rating` (1-10)
-- `created_at`
+🗄 Database Schema
 
-### Key Design Decisions
-- ✅ **Normalized Database**: Each collection type has dedicated table
-- ✅ **Foreign Keys**: CASCADE delete maintains data integrity
-- ✅ **Unique Constraints**: `(user_id, media_id, media_type)` prevents duplicates
-- ✅ **External Data**: Movie/TV details fetched from TMDb API (not stored)
-- ✅ **Flexible Media Types**: Supports both movies and TV shows
+Models
+
+User (Django Built-in)
+	•	id (PK)
+	•	username
+	•	email
+	•	password
+
+Favorite
+	•	id (PK)
+	•	user_id (FK → User) - One-to-Many
+	•	media_id (TMDb ID)
+	•	media_type (‘movie’ | ‘tv’)
+	•	created_at
+
+Watchlist
+	•	id (PK)
+	•	user_id (FK → User) - One-to-Many
+	•	media_id (TMDb ID)
+	•	media_type (‘movie’ | ‘tv’)
+	•	created_at
+
+Watched
+	•	id (PK)
+	•	user_id (FK → User) - One-to-Many
+	•	media_id (TMDb ID)
+	•	media_type (‘movie’ | ‘tv’)
+	•	watched_at
+
+Rating
+	•	id (PK)
+	•	user_id (FK → User) - One-to-Many
+	•	media_id (TMDb ID)
+	•	media_type (‘movie’ | ‘tv’)
+	•	rating (1–10)
+	•	created_at
+
+Key Design Decisions
+	•	✅ Normalized schema for efficiency
+	•	✅ Foreign keys with CASCADE delete for integrity
+	•	✅ Unique constraints (user_id, media_id, media_type)
+	•	✅ External data fetched from TMDb API only
 
 ---
 
@@ -311,14 +305,6 @@ MovieRecPro/
 │   ├── views.py               # Movie endpoints
 │   ├── tmdb_service.py        # TMDb API integration
 │   └── urls.py
-├── movierec-frontend/         # React frontend
-│   ├── src/
-│   │   ├── components/        # React components
-│   │   ├── pages/             # Page components
-│   │   ├── context/           # Auth context
-│   │   ├── services/          # API service
-│   │   └── App.jsx
-│   └── package.json
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Environment variables
 ├── .gitignore
@@ -327,67 +313,27 @@ MovieRecPro/
 
 ---
 
-## 🎯 Best Practices Implemented
+## 🏆 Best Practices Implemented
 
-### Backend
-✅ **RESTful API Design** - Clean, intuitive endpoints  
-✅ **JWT Authentication** - Secure, stateless auth  
-✅ **Database Normalization** - Efficient schema design  
-✅ **Caching Strategy** - Redis for performance  
-✅ **Error Handling** - Comprehensive try-catch blocks  
-✅ **API Documentation** - Swagger/OpenAPI spec  
-✅ **CORS Configuration** - Secure cross-origin requests  
-✅ **Environment Variables** - Sensitive data protection  
-
-### Frontend
-✅ **Component-Based Architecture** - Reusable components  
-✅ **State Management** - React Context API  
-✅ **Protected Routes** - Authentication guards  
-✅ **Error Boundaries** - Graceful error handling  
-✅ **Responsive Design** - Mobile-friendly UI  
-✅ **Performance Optimization** - Lazy loading, memoization  
-
-### Development
-✅ **Version Control** - Git with semantic commits  
-✅ **Code Organization** - Clear separation of concerns  
-✅ **Documentation** - Inline comments, README  
-
----
-
-## 🏆 Challenges & Solutions
-
-### Challenge 1: Managing External API Data
-**Problem**: TMDb API rate limits and data freshness  
-**Solution**: Implemented Redis caching with 1-hour TTL, reducing API calls by 80%
-
-### Challenge 2: Complex Wizard Filtering
-**Problem**: Too strict filters returned zero results  
-**Solution**: Adjusted thresholds (lowered vote requirements, flexible rating ranges)
-
-### Challenge 3: Real-time Collection Updates
-**Problem**: UI not reflecting collection changes immediately  
-**Solution**: Callback-based state updates, optimistic UI rendering
+	•	RESTful API design, JWT auth
+	•	Database normalization, indexing, unique constraints
+	•	Redis caching for performance
+	•	Error handling and logging
+	•	Swagger/OpenAPI documentation
 
 ---
 
 ## 👨‍💻 Author
 
-**Fatma Osama**  
-- GitHub: [@Fatma0sama](https://github.com/Fatma0sama)
+**Rana Mohsen**  
+- GitHub: [@Fatma0sama](https://github.com/ranabadawy_02)
 
 ---
 
 ## 📄 License
 
-This project is for educational purposes as part of the ProDev Backend Program.
+for educational purposes as part of the ProDev Backend Program.
 
----
-
-## 🙏 Acknowledgments
-
-- **TMDb API** for movie/TV data
-- **ProDev Backend Program** for guidance
-- **Django & React communities** for excellent documentation
 
 ---
 
@@ -395,6 +341,4 @@ This project is for educational purposes as part of the ProDev Backend Program.
 
 For questions or feedback, please open an issue on GitHub.
 
----
 
-**Built with ❤️ using Django & React**
